@@ -6,11 +6,11 @@
 void read_map_and_determine_the_size(char(*)[2000][2001],unsigned*,unsigned*) ;
 void determine_each_block_size_and_replace_the_wall_symbol(char(*)[2000][2001],const unsigned,const unsigned,unsigned*,unsigned*) ;
 void print_the_map(char(*)[2000][2001],const unsigned,const unsigned) ;
-void fork_four_miners() ;
-    void miner1() ;
-    void miner2() ;
-    void miner3() ;
-    void miner4() ;
+void fork_four_miners(char(*)[2000][2001],const unsigned,const unsigned,const unsigned,const unsigned) ;
+    unsigned miner1(char(*)[2000][2001],const unsigned,const unsigned,const unsigned,const unsigned) ;
+    unsigned miner2(char(*)[2000][2001],const unsigned,const unsigned,const unsigned,const unsigned) ;
+    unsigned miner3(char(*)[2000][2001],const unsigned,const unsigned,const unsigned,const unsigned) ;
+    unsigned miner4(char(*)[2000][2001],const unsigned,const unsigned,const unsigned,const unsigned) ;
 
 int main(){
     unsigned i , width , height , col_num_of_vertical_wall , row_num_of_horizontal_wall ;
@@ -25,7 +25,7 @@ int main(){
 
     //printf("%d,%d\n",col_num_of_vertical_wall,row_num_of_horizontal_wall) ;
 
-    fork_four_miners() ;
+    fork_four_miners(&map,width,height,col_num_of_vertical_wall,row_num_of_horizontal_wall) ;
 
 
 }
@@ -86,9 +86,10 @@ void print_the_map(char(* m)[2000][2001],const unsigned w,const unsigned h){
 }
 
 
-void fork_four_miners(){
+void fork_four_miners(char(*m)[2000][2001],const unsigned w,const unsigned h,const unsigned col,const unsigned row){
     
     pid_t pid ;
+    unsigned m1,m2,m3,m4 ;
 
     pid=fork();
     if(pid<0){
@@ -96,7 +97,7 @@ void fork_four_miners(){
         exit(1) ;
     }
     else if(pid==0){
-        miner1() ;
+        m1=miner1(m,0,0,row,col) ;
     }
     else{
         pid=fork() ;
@@ -105,7 +106,7 @@ void fork_four_miners(){
             exit(1) ;
         }
         else if(pid==0){
-            miner2() ;
+            m2=miner2(m,0,col+1,row,w) ;
         }
         else{
             pid=fork() ;
@@ -114,7 +115,7 @@ void fork_four_miners(){
                 exit(1) ;
             }
             else if(pid==0){
-                miner3() ;
+                m3=miner3(m,row+1,0,h,col) ;
             }
             else{
                 pid=fork() ;
@@ -123,14 +124,15 @@ void fork_four_miners(){
                     exit(1) ;
                 }
                 else if(pid==0){
-                    miner4() ;
+                    m4=miner4(m,row+1,col+1,h,w) ;
                 }
                 else{
                     wait(NULL) ;
                     wait(NULL) ;
                     wait(NULL) ;
                     wait(NULL) ;
-                    printf("all miners are here!\n") ;
+                    //printf("%d %d %d %d\n",m1,m2,m3,m4) ;
+                    //printf("all miners are here!\n") ;
                 }
             }
         }
@@ -139,24 +141,60 @@ void fork_four_miners(){
 }
 
 
-void miner1(){
-    printf("miner1!\n") ;
+unsigned miner1(char(*m)[2000][2001],const unsigned x1,const unsigned y1,const unsigned x2,const unsigned y2){
+    //printf("miner1!\n") ;
+    unsigned i , j , count=0 ;
+    for(i=y1 ; i<y2 ; i++){
+        for(j=x1 ; j<x2 ; j++){
+            //printf("miner1 %c\n",(*m)[j][i]) ;
+            if((*m)[j][i]=='*') count++ ;
+        }
+    }
+    printf("miner1 %d\n",count) ;
+    return count ;
 }
 
 
-void miner2(){
-    printf("miner2!\n") ;
+unsigned miner2(char(*m)[2000][2001],const unsigned x1,const unsigned y1,const unsigned x2,const unsigned y2){
+    //printf("miner2!\n") ;
+    unsigned i , j , count=0 ;
+    for(i=y1 ; i<y2 ; i++){
+        for(j=x1 ; j<x2 ; j++){
+            //printf("miner2 %c\n",(*m)[j][i]) ;
+            if((*m)[j][i]=='*') count++ ;
+        }
+    }
+    printf("miner2 %d\n",count) ;
+    return count ;
 }
 
 
-void miner3(){
-    printf("miner3!\n") ;
+unsigned miner3(char(*m)[2000][2001],const unsigned x1,const unsigned y1,const unsigned x2,const unsigned y2){
+    //printf("miner3!\n") ;
+    unsigned i , j , count=0 ;
+    for(i=y1 ; i<y2 ; i++){
+        for(j=x1 ; j<x2 ; j++){
+            //printf("miner3 %c\n",(*m)[j][i]) ;
+            if((*m)[j][i]=='*') count++ ;
+        }
+    }
+    printf("miner3 %d\n",count) ;
+    return count ;
 }
 
 
 
-void miner4(){
-    printf("miner4!\n") ;
+unsigned miner4(char(*m)[2000][2001],const unsigned x1,const unsigned y1,const unsigned x2,const unsigned y2){
+    //printf("miner4!\n") ;
+    unsigned i , j , count=0 ;
+    for(i=y1 ; i<y2 ; i++){
+        for(j=x1 ; j<x2 ; j++){
+            //printf("miner4 %c\n",(*m)[j][i]) ;
+            if((*m)[j][i]=='*') count++ ;
+        }
+    }
+    printf("miner4 %d\n",count) ;
+    return count ;
 }
 
 
