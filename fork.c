@@ -13,6 +13,7 @@ void fork_four_miners(char(*)[2000][2001],const unsigned,const unsigned,const un
     unsigned miner2(char(*)[2000][2001],const unsigned,const unsigned,const unsigned,const unsigned) ;
     unsigned miner3(char(*)[2000][2001],const unsigned,const unsigned,const unsigned,const unsigned) ;
     unsigned miner4(char(*)[2000][2001],const unsigned,const unsigned,const unsigned,const unsigned) ;
+void compare_and_print_the_result(unsigned(*)[4]) ;
 
 int main(){
     unsigned i , width , height , col_num_of_vertical_wall , row_num_of_horizontal_wall ;
@@ -30,6 +31,9 @@ int main(){
 
     fork_four_miners(&map,width,height,col_num_of_vertical_wall,row_num_of_horizontal_wall,&miners) ;
 
+    //printf("%d %d %d %d\n",miners[0],miners[1],miners[2],miners[3]) ;
+
+    compare_and_print_the_result(&miners) ;
 
 }
 
@@ -169,6 +173,10 @@ void fork_four_miners(char(*m)[2000][2001],const unsigned w,const unsigned h,con
                     printf("%s\n",msgbuffer2) ;
                     printf("%s\n",msgbuffer3) ;
                     printf("%s\n",msgbuffer4) ;
+                    (*miners)[0] = atoi(msgbuffer1) ;
+                    (*miners)[1] = atoi(msgbuffer2) ;
+                    (*miners)[2] = atoi(msgbuffer3) ;
+                    (*miners)[3] = atoi(msgbuffer4) ;
 
                 }
             }
@@ -234,7 +242,34 @@ unsigned miner4(char(*m)[2000][2001],const unsigned x1,const unsigned y1,const u
     return count ;
 }
 
+void compare_and_print_the_result(unsigned (*miners)[4]){
+    unsigned max=(*miners)[0] ;
+    int i , draw=0 ;
 
+    // compare
+    for(i=1 ; i<4 ; i++){
+        if((*miners)[i]>max){
+            max = (*miners)[i] ;
+            draw=0 ; // no matter draw is originally 0 or 1, draw must be zero after finding out new max number.
+        }
+        else if((*miners)[i]==max){
+            draw=1 ;
+        }
+    }
+
+    //print result
+    for(i=0 ; i<4 ; i++){
+        if((*miners)[i]<max){
+            printf("Miner#%d: %d\n",i+1,(*miners)[i]) ;
+        }
+        else if((*miners)[i]==max && draw==0){
+            printf("Miner#%d: %d (win)\n",i+1,(*miners)[i]) ;
+        }
+        else{
+            printf("Miner#%d: %d (draw)\n",i+1,(*miners)[i]) ;
+        }
+    }
+}
 
 
 
