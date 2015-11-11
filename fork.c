@@ -121,6 +121,7 @@ void fork_four_miners(char(*m)[2000][2001],const unsigned w,const unsigned h,con
         char str[10] ;
         sprintf(str,"%d",m1) ;
         write(pipe1[1],str,strlen(str)+1) ;
+        exit(0) ;
     }
     else{
         pid=fork() ;
@@ -133,6 +134,7 @@ void fork_four_miners(char(*m)[2000][2001],const unsigned w,const unsigned h,con
             char str[10] ;
             sprintf(str,"%d",m2) ;
             write(pipe2[1],str,strlen(str)+1) ;
+            exit(0) ;
         }
         else{
             pid=fork() ;
@@ -145,6 +147,7 @@ void fork_four_miners(char(*m)[2000][2001],const unsigned w,const unsigned h,con
                 char str[10] ;
                 sprintf(str,"%d",m3) ;
                 write(pipe3[1],str,strlen(str)+1) ;
+                exit(0) ;
             }
             else{
                 pid=fork() ;
@@ -157,6 +160,7 @@ void fork_four_miners(char(*m)[2000][2001],const unsigned w,const unsigned h,con
                     char str[10] ;
                     sprintf(str,"%d",m4) ;
                     write(pipe4[1],str,strlen(str)+1) ;
+                    exit(0) ;
                 }
                 else{
                     wait(NULL) ;
@@ -169,10 +173,10 @@ void fork_four_miners(char(*m)[2000][2001],const unsigned w,const unsigned h,con
                     read(pipe2[0],msgbuffer2,10) ;
                     read(pipe3[0],msgbuffer3,10) ;
                     read(pipe4[0],msgbuffer4,10) ;
-                    printf("%s\n",msgbuffer1) ;
-                    printf("%s\n",msgbuffer2) ;
-                    printf("%s\n",msgbuffer3) ;
-                    printf("%s\n",msgbuffer4) ;
+                    //printf("%s\n",msgbuffer1) ;
+                    //printf("%s\n",msgbuffer2) ;
+                    //printf("%s\n",msgbuffer3) ;
+                    //printf("%s\n",msgbuffer4) ;
                     (*miners)[0] = atoi(msgbuffer1) ;
                     (*miners)[1] = atoi(msgbuffer2) ;
                     (*miners)[2] = atoi(msgbuffer3) ;
@@ -195,7 +199,7 @@ unsigned miner1(char(*m)[2000][2001],const unsigned x1,const unsigned y1,const u
             if((*m)[j][i]=='*') count++ ;
         }
     }
-    printf("miner1 %d\n",count) ;
+    //printf("miner1 %d\n",count) ;
     return count ;
 }
 
@@ -209,7 +213,7 @@ unsigned miner2(char(*m)[2000][2001],const unsigned x1,const unsigned y1,const u
             if((*m)[j][i]=='*') count++ ;
         }
     }
-    printf("miner2 %d\n",count) ;
+    //printf("miner2 %d\n",count) ;
     return count ;
 }
 
@@ -223,7 +227,7 @@ unsigned miner3(char(*m)[2000][2001],const unsigned x1,const unsigned y1,const u
             if((*m)[j][i]=='*') count++ ;
         }
     }
-    printf("miner3 %d\n",count) ;
+    //printf("miner3 %d\n",count) ;
     return count ;
 }
 
@@ -238,7 +242,7 @@ unsigned miner4(char(*m)[2000][2001],const unsigned x1,const unsigned y1,const u
             if((*m)[j][i]=='*') count++ ;
         }
     }
-    printf("miner4 %d\n",count) ;
+    //printf("miner4 %d\n",count) ;
     return count ;
 }
 
